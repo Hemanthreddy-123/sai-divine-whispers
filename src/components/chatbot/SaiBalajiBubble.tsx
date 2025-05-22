@@ -1,5 +1,6 @@
 
 import React from "react";
+import { useTheme } from "next-themes";
 
 interface BubbleProps {
   onClick: () => void;
@@ -7,6 +8,9 @@ interface BubbleProps {
 }
 
 export const SaiBalajiBubble: React.FC<BubbleProps> = ({ onClick, isOpen }) => {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   return (
     <button
       onClick={onClick}
@@ -14,12 +18,14 @@ export const SaiBalajiBubble: React.FC<BubbleProps> = ({ onClick, isOpen }) => {
         ${
           isOpen
             ? "scale-0 opacity-0" 
-            : "bg-gradient-to-r from-devotional-saffron to-devotional-maroon animate-pulse-soft"
+            : isDark 
+              ? "bg-gradient-to-r from-devotional-saffron to-devotional-maroon animate-pulse-soft"
+              : "bg-gradient-to-r from-devotional-saffron/70 to-devotional-maroon/70 animate-pulse-soft"
         }`}
       aria-label="Open SaiBalaji Chatbot"
     >
       <div className="relative flex items-center justify-center w-10 h-10">
-        <div className="absolute inset-0 rounded-full bg-devotional-gold opacity-20 animate-pulse-soft"></div>
+        <div className={`absolute inset-0 rounded-full ${isDark ? "bg-devotional-gold" : "bg-devotional-gold/60"} opacity-20 animate-pulse-soft`}></div>
         <div className="text-devotional-white text-xl">🙏</div>
       </div>
     </button>

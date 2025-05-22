@@ -5,6 +5,7 @@ import { ChatMessage } from "./ChatMessage";
 import { ChatInput } from "./ChatInput";
 import { generateResponse } from "@/lib/openai";
 import { X } from "lucide-react";
+import { useTheme } from "next-themes";
 
 export const ChatbotWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,6 +17,8 @@ export const ChatbotWidget: React.FC = () => {
   ]);
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
@@ -51,12 +54,14 @@ export const ChatbotWidget: React.FC = () => {
       <SaiBalajiBubble onClick={toggleChat} isOpen={isOpen} />
 
       <div
-        className={`fixed bottom-6 right-6 w-[350px] max-w-[90vw] h-[500px] max-h-[80vh] bg-devotional-light rounded-lg shadow-xl overflow-hidden flex flex-col z-50 transition-all duration-300 transform ${
+        className={`fixed bottom-6 right-6 w-[350px] max-w-[90vw] h-[500px] max-h-[80vh] ${isDark ? 'bg-devotional-dark' : 'bg-devotional-light-pale'} rounded-lg shadow-xl overflow-hidden flex flex-col z-50 transition-all duration-300 transform ${
           isOpen ? "scale-100 opacity-100" : "scale-0 opacity-0"
         }`}
       >
         {/* Header */}
-        <div className="bg-gradient-to-r from-devotional-saffron to-devotional-maroon p-4 text-devotional-white flex items-center justify-between">
+        <div className={`${isDark 
+          ? 'bg-gradient-to-r from-devotional-saffron to-devotional-maroon' 
+          : 'bg-gradient-to-r from-devotional-saffron-light to-devotional-maroon-light'} p-4 text-devotional-white flex items-center justify-between`}>
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-full bg-devotional-gold flex items-center justify-center text-devotional-maroon font-bold">
               🙏
@@ -73,7 +78,7 @@ export const ChatbotWidget: React.FC = () => {
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-4 bg-devotional-white/50">
+        <div className={`flex-1 overflow-y-auto p-4 ${isDark ? 'bg-devotional-dark/95' : 'bg-devotional-white/50'}`}>
           {messages.map((message, index) => (
             <ChatMessage key={index} message={message} />
           ))}

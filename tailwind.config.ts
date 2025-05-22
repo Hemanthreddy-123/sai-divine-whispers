@@ -63,14 +63,19 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Devotional theme colors
+				// Devotional theme colors with light and dark variations
 				devotional: {
 					saffron: '#FF9933',
+					'saffron-light': '#FFCB99',
 					maroon: '#800000',
+					'maroon-light': '#C08080',
 					gold: '#FFD700',
+					'gold-light': '#FFE866',
 					white: '#FFFFFF',
 					light: '#FFF8EF',
+					'light-pale': '#F8F0E8',
 					dark: '#4A2511',
+					'dark-muted': '#6B4D3A',
 				},
 			},
 			borderRadius: {

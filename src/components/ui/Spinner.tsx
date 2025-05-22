@@ -1,5 +1,6 @@
 
 import React from "react";
+import { useTheme } from "next-themes";
 
 export const Spinner: React.FC<{ size?: "sm" | "md" | "lg" }> = ({ size = "sm" }) => {
   const sizeClasses = {
@@ -8,10 +9,13 @@ export const Spinner: React.FC<{ size?: "sm" | "md" | "lg" }> = ({ size = "sm" }
     lg: "w-8 h-8",
   };
   
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   return (
     <div className="flex items-center justify-center">
       <div 
-        className={`${sizeClasses[size]} text-devotional-gold animate-spin`} 
+        className={`${sizeClasses[size]} ${isDark ? 'text-devotional-gold' : 'text-devotional-gold-light'} animate-spin`} 
         role="status"
       >
         <svg className="animate-rotate" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
