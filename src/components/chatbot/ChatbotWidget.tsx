@@ -3,9 +3,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { SaiBalajiBubble } from "./SaiBalajiBubble";
 import { ChatMessage } from "./ChatMessage";
 import { ChatInput } from "./ChatInput";
-import { generateResponse } from "@/lib/openai";
+import { generateResponse, validateMessage } from "@/lib/openai";
 import { X } from "lucide-react";
 import { useTheme } from "next-themes";
+import { toast } from "@/components/ui/sonner";
 
 export const ChatbotWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,6 +26,15 @@ export const ChatbotWidget: React.FC = () => {
   };
 
   const handleSendMessage = async (content: string) => {
+    // Validate input similar to your Python check() function
+    if (!validateMessage(content)) {
+      toast.warning("Field is empty", {
+        description: "Please enter a question",
+        duration: 3000,
+      });
+      return;
+    }
+    
     const userMessage = { role: "user" as const, content };
     setMessages((prev) => [...prev, userMessage]);
     setIsLoading(true);

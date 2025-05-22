@@ -66,5 +66,8 @@ export async function generateResponse(messages: Array<{ role: string; content: 
 
 // This function simulates your Python implementation's error checking
 export function validateMessage(message: string): boolean {
-  return message.trim() !== "";
+  if (message.trim() === "") {
+    return false;
+  }
+  return true;
 }
